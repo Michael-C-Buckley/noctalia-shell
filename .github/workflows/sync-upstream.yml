@@ -1,0 +1,83 @@
+name: Sync Fork with Upstream
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote
+        run: |
+          git remote add upstream https://github.com/noctalia-dev/noctalia-shell.git || true
+          git remote -v
+
+      - name: Fetch upstream changes
+        run: |
+          git fetch upstream
+
+      - name: Sync main branch with upstream
+        run: |
+          # Get the default branch name (main or master)
+          DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+          echo "Default branch: $DEFAULT_BRANCH"
+          
+          # Checkout the default branch
+          git checkout $DEFAULT_BRANCH
+          
+          # Merge upstream changes
+          git merge upstream/$DEFAULT_BRANCH --no-edit || {
+            echo "::warning::Merge conflict detected. Manual resolution required."
+            exit 1
+          }
+
+      - name: Push changes
+        run: |
+          DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+          git push origin $DEFAULT_BRANCH
+
+      - name: Sync feature branches (optional)
+        run: |
+          DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+          
+          # List of additional branches to sync (add branches here as needed)
+          BRANCHES_TO_SYNC=()
+          
+          for BRANCH in "${BRANCHES_TO_SYNC[@]}"; do
+            if git show-ref --verify --quiet refs/remotes/origin/$BRANCH; then
+              echo "Syncing $BRANCH branch"
+              git checkout $BRANCH
+              git merge upstream/$DEFAULT_BRANCH --no-edit || {
+                echo "::warning::Merge conflict detected on $BRANCH branch. Manual resolution required."
+                continue
+              }
+              git push origin $BRANCH
+            else
+              echo "Branch $BRANCH does not exist, skipping"
+            fi
+          done
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "✅ Successfully synced fork with upstream repository" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Upstream: noctalia-dev/noctalia-shell" >> $GITHUB_STEP_SUMMARY
+          echo "- Last sync: $(date)" >> $GITHUB_STEP_SUMMARY
