@@ -257,6 +257,10 @@
     },
     "dock": {
       "title": "Dock",
+      "enabled": {
+        "label": "Habilitar dock",
+        "description": "Mostrar u ocultar el dock por completo"
+      },
       "appearance": {
         "section": {
           "label": "Apariencia",
@@ -289,7 +293,7 @@
       "monitors": {
         "section": {
           "label": "Visualización en monitor",
-          "description": "Elige en qué monitor mostrar el dock."
+          "description": "Mostrar el dock en monitores específicos. Por defecto, se muestra en todos si no se elige ninguno."
         },
         "only-same-output": {
           "description": "Mostrar solo las aplicaciones de la salida donde se encuentra el dock.",
@@ -645,6 +649,10 @@
         "fahrenheit": {
           "label": "Mostrar temperatura en Fahrenheit (°F)",
           "description": "Muestra la temperatura en Fahrenheit en lugar de Celsius."
+        },
+        "show-in-calendar": {
+          "description": "Muestra el pronóstico del tiempo diario directamente en la vista de tu calendario.",
+          "label": "Mostrar el clima en el calendario"
         }
       },
       "date-time": {
@@ -667,6 +675,11 @@
         "use-analog": {
           "description": "Mostrar un reloj de estilo analógico en la pantalla del calendario.",
           "label": "Usar reloj de estilo analógico"
+        },
+        "first-day-of-week": {
+          "automatic": "Automático (usar la configuración regional del sistema)",
+          "description": "Elige qué día empieza la semana en el calendario.",
+          "label": "Primer día de la semana"
         }
       }
     },

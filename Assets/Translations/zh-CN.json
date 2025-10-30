@@ -257,6 +257,10 @@
     },
     "dock": {
       "title": "Dock",
+      "enabled": {
+        "label": "启用 Dock",
+        "description": "完全显示或隐藏 Dock"
+      },
       "appearance": {
         "section": {
           "label": "外观",
@@ -289,7 +293,7 @@
       "monitors": {
         "section": {
           "label": "显示器显示",
-          "description": "选择在哪个显示器上显示 Dock。"
+          "description": "在特定显示器上显示 Dock。如果未选择任何显示器，则默认为全部。"
         },
         "only-same-output": {
           "description": "仅显示输出结果中dock所在位置的应用。",
@@ -645,6 +649,10 @@
         "fahrenheit": {
           "label": "以华氏度显示温度 (°F)",
           "description": "以华氏度而非摄氏度显示温度。"
+        },
+        "show-in-calendar": {
+          "description": "直接在您的日历视图中显示每日天气预报。",
+          "label": "在日历中显示天气"
         }
       },
       "date-time": {
@@ -667,6 +675,11 @@
         "use-analog": {
           "description": "在日历屏幕上显示一个模拟时钟。",
           "label": "使用模拟时钟样式"
+        },
+        "first-day-of-week": {
+          "automatic": "自动（使用系统区域设置）",
+          "description": "选择日历中一周的起始日。",
+          "label": "一周的第一天"
         }
       }
     },

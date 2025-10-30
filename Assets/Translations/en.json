@@ -257,6 +257,10 @@
     },
     "dock": {
       "title": "Dock",
+      "enabled": {
+        "label": "Enable dock",
+        "description": "Show or hide the dock entirely"
+      },
       "appearance": {
         "section": {
           "label": "Appearance",
@@ -289,7 +293,7 @@
       "monitors": {
         "section": {
           "label": "Monitor display",
-          "description": "Choose which monitor to display the dock on."
+          "description": "Show dock on specific monitors. Defaults to all if none are chosen."
         },
         "only-same-output": {
           "label": "Only apps from same output",
@@ -645,6 +649,10 @@
         "fahrenheit": {
           "label": "Display temperature in Fahrenheit (°F)",
           "description": "Display temperature in Fahrenheit instead of Celsius."
+        },
+        "show-in-calendar": {
+          "label": "Display weather in calendar",
+          "description": "Show the daily weather forecast directly in your calendar view."
         }
       },
       "date-time": {
@@ -659,6 +667,11 @@
         "week-numbers": {
           "label": "Show week numbers",
           "description": "Displays the week of the year (e.g., Week 38) in the calendar."
+        },
+        "first-day-of-week": {
+          "label": "First day of week",
+          "description": "Choose which day starts the week in the calendar.",
+          "automatic": "Automatic (use system locale)"
         },
         "show-events": {
           "label": "Show calendar events",

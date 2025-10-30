@@ -203,7 +203,9 @@ Singleton {
       property bool use12hourFormat: false
       property bool showWeekNumberInCalendar: false
       property bool showCalendarEvents: true
+      property bool showCalendarWeather: false
       property bool analogClockInCalendar: false
+      property int firstDayOfWeek: -1 // -1 = auto (use locale), 0 = Sunday, 1 = Monday, 6 = Saturday
     }
 
     // screen recorder
@@ -296,6 +298,7 @@ Singleton {
 
     // dock
     property JsonObject dock: JsonObject {
+      property bool enabled: true
       property string displayMode: "always_visible" // "always_visible", "auto_hide", "exclusive"
       property real backgroundOpacity: 1.0
       property real floatingRatio: 1.0
