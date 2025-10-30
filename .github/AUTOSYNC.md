@@ -25,7 +25,7 @@ To manually sync your fork:
 By default, the workflow only syncs the main/default branch. If you want to automatically sync additional feature branches:
 
 1. Edit `.github/workflows/sync-upstream.yml`
-2. Find the `BRANCHES_TO_SYNC` array
+2. Find the `BRANCHES_TO_SYNC` Bash array
 3. Add your branch names, for example:
    ```bash
    BRANCHES_TO_SYNC=("develop" "feature-branch" "another-branch")
