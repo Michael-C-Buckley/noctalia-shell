@@ -1,24 +1,14 @@
 {
   description = "Noctalia shell - a Wayland desktop shell built with Quickshell";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    systems.url = "github:nix-systems/default";
-
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
   outputs = {
     self,
     nixpkgs,
-    systems,
-    quickshell,
     ...
   }: let
-    eachSystem = nixpkgs.lib.genAttrs (import systems);
+    eachSystem = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
   in {
     formatter = eachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
@@ -28,10 +18,7 @@
       in {
         default = pkgs.callPackage ./nix/package.nix {
           version = self.rev or self.dirtyRev or "dirty";
-          quickshell = quickshell.packages.${system}.default.override {
-            withX11 = false;
-            withI3 = true;
-          };
+          inherit (pkgs) quickshell;
         };
       }
     );
